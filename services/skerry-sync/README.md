@@ -44,10 +44,22 @@ The commented `0.0.0.0:${SERVICEPORT}:${SERVICEPORT}` mapping stays removed for 
 
 ## Service-specific notes
 
-- SQLite is the default with zero configuration (`SKERRY_DB_URL=jdbc:sqlite:/data/skerry-sync.db`). PostgreSQL is an upstream option but is not wired into this stack; it would need an additional `db` service.
+- SQLite is the default with zero configuration (`SKERRY_DB_URL=jdbc:sqlite:/data/skerry-sync.db`). For PostgreSQL, uncomment the `db` service and its `depends_on` entry in `compose.yaml`, then set `SKERRY_DB_URL=jdbc:postgresql://localhost:5432/skerry` plus `SKERRY_DB_USER`, `SKERRY_DB_PASSWORD`, and `POSTGRES_PASSWORD` in `.env` (the database shares the Tailscale network namespace, so the app reaches it at `localhost`).
 - The server refuses to start with the upstream default JWT secret unless `SKERRY_DEV=1`. Always set a real `SKERRY_JWT_SECRET`.
 - The bundled `skerry-admin` CLI is available inside the app container: `docker exec app-skerry-sync skerry-admin --help`.
 - The image defines its own `HEALTHCHECK` (`wget -qO- http://localhost:8080/healthz`), so this stack does not override it.
+
+## Troubleshooting
+
+- `SQLiteException: [SQLITE_CANTOPEN] Unable to open the database file` at startup means the bind-mounted `/data` directory is not writable by the container's unprivileged user (`999:999`). This happens when Docker auto-creates `skerry-sync-data/data` as root. Fix it with:
+
+  ```sh
+  docker compose down
+  sudo rm -rf skerry-sync-data/data
+  mkdir -p skerry-sync-data/data
+  sudo chown -R 999:999 skerry-sync-data
+  docker compose up -d
+  ```
 
 ## Upstream documentation
 
@@ -60,4 +72,4 @@ The commented `0.0.0.0:${SERVICEPORT}:${SERVICEPORT}` mapping stays removed for 
 
 Please check the following contents for validity as some variables need to be defined upfront.
 
-- `.env` // Main variables `TS_AUTHKEY`, `SKERRY_JWT_SECRET`, `SKERRY_ADMIN_TOKEN`
+- `.env` // Main variables `TS_AUTHKEY`, `SKERRY_JWT_SECRET`, `SKERRY_ADMIN_TOKEN` (plus `SKERRY_DB_*`/`POSTGRES_PASSWORD` when using PostgreSQL)

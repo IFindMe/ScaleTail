@@ -55,6 +55,8 @@ services:
     environment: # Variables are declared in .env file.
       - TZ=${TZ}
       - SKERRY_DB_URL=${SKERRY_DB_URL}
+      - SKERRY_DB_USER=${SKERRY_DB_USER}
+      - SKERRY_DB_PASSWORD=${SKERRY_DB_PASSWORD}
       - SKERRY_JWT_SECRET=${SKERRY_JWT_SECRET:?Set SKERRY_JWT_SECRET in .env}
       - SKERRY_ADMIN_TOKEN=${SKERRY_ADMIN_TOKEN}
     volumes:
@@ -62,5 +64,30 @@ services:
     depends_on:
       tailscale:
         condition: service_healthy
+      # Uncomment together with the `db` service below when using PostgreSQL.
+      #db:
+      #  condition: service_healthy
     # Healthcheck: defined by the image (wget -qO- http://localhost:8080/healthz), so this file does not override it.
     restart: always
+
+  # # Optional PostgreSQL database (instead of SQLite).
+  # # To use it: uncomment this service and the `depends_on` entry above, then set
+  # # SKERRY_DB_URL, SKERRY_DB_USER, SKERRY_DB_PASSWORD, and POSTGRES_PASSWORD in .env.
+  # # The service shares the Tailscale network namespace, so the app reaches it at localhost.
+  #db:
+  #  image: postgres:17-alpine
+  #  network_mode: service:tailscale # Join the same network namespace to be accessible via localhost
+  #  container_name: app-${SERVICE}-db # Name for local container management
+  #  environment:
+  #    - POSTGRES_DB=skerry
+  #    - POSTGRES_USER=${SKERRY_DB_USER}
+  #    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #  volumes:
+  #    - ./${SERVICE}-data/db:/var/lib/postgresql/data
+  #  healthcheck:
+  #    test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER} -d skerry"] # Check if PostgreSQL accepts connections
+  #    interval: 10s # How often to perform the check
+  #    timeout: 5s # Time to wait for the check to succeed
+  #    retries: 5 # Number of retries before marking as unhealthy
+  #    start_period: 30s # Time to wait before starting health checks
+  #  restart: always
