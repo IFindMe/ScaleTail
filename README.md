@@ -199,6 +199,7 @@ ScaleTail provides ready-to-run [Docker Compose](https://docs.docker.com/compose
 | 🖥️ **Portainer**          | A lightweight management UI which allows you to easily manage your Docker environments.                     | [Details](services/portainer)       |
 | 🔍 **searXNG**            | A free internet metasearch engine which aggregates results from various search services.                    | [Details](services/searxng)         |
 | 🧠 **Ollama**             | A self-hosted solution for running open large language models (LLMs) locally with an OpenAI-compatible API. | [Details](services/ollama)          |
+| 🖥️ **Termix**             | A self-hosted server management platform with SSH terminals, remote desktops, tunnels, and Docker management. | [Details](services/termix)          |
 
 ### 📈 Monitoring and Analytics
 
