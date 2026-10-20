@@ -177,6 +177,7 @@ Every stack starts from the same [standard setup](documentation/standard-setup.m
 | **Radicale**      | CalDAV and CardDAV server that syncs calendars, to-do lists, and contacts.                 | [Details](services/radicale)      |
 | **Resilio Sync**  | Peer-to-peer tool that syncs folders between your devices, without a central server.       | [Details](services/resilio-sync)  |
 | **Seafile**       | File sync and sharing platform that stores files in libraries.                             | [Details](services/seafile)       |
+| **Skerry Sync**   | Sync server for the Skerry SSH client, which stores only encrypted data.                   | [Details](services/skerry-sync)   |
 | **Stirling-PDF**  | PDF toolbox for merging, splitting, converting, compressing, signing, and editing.         | [Details](services/stirlingpdf)   |
 | **SubTrackr**     | Subscription tracker that shows monthly and yearly costs and when each one renews.         | [Details](services/subtrackr)     |
 | **Sure**          | Fork of the archived Maybe finance app, for tracking accounts, investments, and net worth. | [Details](services/sure)          |
@@ -214,6 +215,7 @@ Every stack starts from the same [standard setup](documentation/standard-setup.m
 | **Ollama**    | Runtime for large language models, with an OpenAI-compatible API and no login.          | [Details](services/ollama)    |
 | **Portainer** | Web interface to manage Docker containers, images, volumes, and networks.               | [Details](services/portainer) |
 | **SearXNG**   | Metasearch engine that combines results from many search engines without tracking.      | [Details](services/searxng)   |
+| **Termix**    | Server management platform with SSH terminals, file transfers, tunnels, and more.        | [Details](services/termix)    |
 
 ### Monitoring and analytics
 
