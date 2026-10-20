@@ -198,6 +198,7 @@ Every stack starts from the same [standard setup](documentation/standard-setup.m
 | Service       | Description                                                                             | Link                          |
 | ------------- | --------------------------------------------------------------------------------------- | ----------------------------- |
 | **Arcane**    | Web UI to manage Docker containers, images, networks, volumes, and Compose projects.    | [Details](services/arcane)    |
+| **ByteStash** | Code snippet manager with search, categories, and an MCP endpoint for AI assistants.    | [Details](services/bytestash) |
 | **Coder**     | Platform that provisions development environments from Terraform templates.             | [Details](services/coder)     |
 | **CyberChef** | Web app for encoding, decoding, encrypting, compressing, and analyzing data.            | [Details](services/cyberchef) |
 | **Dockge**    | Web interface to manage Docker Compose stacks.                                          | [Details](services/dockge)    |
