@@ -50,10 +50,7 @@ services:
 
   # Application
   application:
-    build:
-      context: ./source # Clone the Vaultite source into this folder before the first start
-      dockerfile: ../docker/Dockerfile # Dockerfile kept in this service folder; context supplies package.json and the sources
-    image: ${IMAGE_URL} # Local image tag built above
+    image: ${IMAGE_URL} # Vaultite image (assumed to exist locally or be pullable)
     network_mode: service:tailscale # Sidecar configuration to route the service through Tailscale
     container_name: app-${SERVICE} # Name for local container management
     environment: # Variables are declared in .env file.
