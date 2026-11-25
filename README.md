@@ -181,6 +181,7 @@ Every stack starts from the same [standard setup](documentation/standard-setup.m
 | **Stirling-PDF**  | PDF toolbox for merging, splitting, converting, compressing, signing, and editing.         | [Details](services/stirlingpdf)   |
 | **SubTrackr**     | Subscription tracker that shows monthly and yearly costs and when each one renews.         | [Details](services/subtrackr)     |
 | **Sure**          | Fork of the archived Maybe finance app, for tracking accounts, investments, and net worth. | [Details](services/sure)          |
+| **Vaultite**      | Local knowledge base you and your AI write together in plain Markdown files.               | [Details](services/vaultite)      |
 | **Vikunja**       | To-do and project management app with lists, boards, Gantt charts, and reminders.          | [Details](services/vikunja)       |
 | **Wallos**        | Subscription and expense tracker with payment reminders and budget help.                   | [Details](services/wallos)        |
 | **XWiki**         | Wiki platform for documentation and knowledge management, with extensions.                 | [Details](services/xwiki)         |
