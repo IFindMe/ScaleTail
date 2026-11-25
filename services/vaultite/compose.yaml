@@ -18,6 +18,7 @@ services:
     environment:
       - TS_AUTHKEY=${TS_AUTHKEY}
       - TS_STATE_DIR=/var/lib/tailscale
+      - TS_SOCKET=/var/run/tailscale/tailscaled.sock # Put socket in shared volume for app
       - TS_SERVE_CONFIG=/config/serve.json # Tailscale Serve configuration to expose the web interface on your local Tailnet - remove this line if not required
       - TS_USERSPACE=false
       - TS_ENABLE_HEALTH_CHECK=true              # Enable healthcheck endpoint: "/healthz"
@@ -64,6 +65,7 @@ services:
     volumes:
       - ./${SERVICE}-data/vault:/app/vault # The vault, instead of a named volume
       - ts-run:/var/run/tailscale # Read-only access to sidecar tailscaled socket
+      - /usr/bin/tailscale:/usr/local/bin/tailscale:ro # Host tailscale CLI for owner/login checks
     depends_on:
       tailscale:
         condition: service_healthy
