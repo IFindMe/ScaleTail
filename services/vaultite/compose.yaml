@@ -30,6 +30,7 @@ services:
     volumes:
       - ./config:/config # Config folder used to store Tailscale files - you may need to change the path
       - ./ts/state:/var/lib/tailscale # Tailscale requirement - you may need to change the path
+      - ts-run:/var/run/tailscale # Share tailscaled socket so app can read tailnet identity
     devices:
       - /dev/net/tun:/dev/net/tun # Network configuration for Tailscale to work
     cap_add:
@@ -59,8 +60,13 @@ services:
       - TZ=${TZ}
       # Serve sends the Tailnet hostname as Host; Vaultite rejects other hostnames.
       - VAULTITE_HOSTS=${VAULTITE_HOSTS:?Set VAULTITE_HOSTS in .env to your Tailnet address}
+      # No TS_AUTHKEY here: the sidecar owns Tailscale. The image's entrypoint
+      # starts a second daemon only when it receives a key, so it does not here.
+      # App reads sidecar tailscaled socket for tailnet owner/login checks.
+      - TS_SOCKET=/var/run/tailscale/tailscaled.sock
     volumes:
       - ./${SERVICE}-data/vault:/app/vault # The vault, instead of a named volume
+      - ts-run:/var/run/tailscale # Read-only access to sidecar tailscaled socket
     depends_on:
       tailscale:
         condition: service_healthy
@@ -72,3 +78,6 @@ services:
       retries: 3 # Number of retries before marking as unhealthy
       start_period: 30s # Time to wait before starting health checks
     restart: always
+
+volumes:
+  ts-run:

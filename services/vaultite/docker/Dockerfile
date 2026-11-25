@@ -11,6 +11,9 @@ FROM node:24-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends build-essential python3 ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
+# Tailscale CLI only: app reads sidecar tailscaled socket via TS_SOCKET.
+COPY --from=tailscale/tailscale:latest /usr/local/bin/tailscale /usr/local/bin/tailscale
+
 WORKDIR /app
 
 # Install dependencies first so the layer is cached before sources change.
@@ -23,4 +26,8 @@ RUN npm run build
 ENV HOST=0.0.0.0 PORT=8793 VAULTITE_VAULT=/app/vault
 VOLUME ["/app/vault"]
 EXPOSE 8793
+COPY docker/entrypoint.sh /app/entrypoint.sh
+# Upstream tracks the entrypoint as 644; make it executable for ENTRYPOINT.
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
 CMD ["node", "server.ts"]
