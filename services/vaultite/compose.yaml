@@ -57,6 +57,8 @@ services:
     container_name: app-${SERVICE} # Name for local container management
     environment: # Variables are declared in .env file.
       - TZ=${TZ}
+      # Serve sends the Tailnet hostname as Host; Vaultite rejects other hostnames.
+      - VAULTITE_HOSTS=${VAULTITE_HOSTS:?Set VAULTITE_HOSTS in .env to your Tailnet address}
     volumes:
       - ./${SERVICE}-data/vault:/app/vault # The vault, instead of a named volume
     depends_on:

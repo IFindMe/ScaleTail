@@ -15,6 +15,8 @@ This stack runs Vaultite with a Tailscale sidecar, as described in [the standard
 
 ## Before you start
 
+Set `VAULTITE_HOSTS` in `.env` to the Tailnet address you will open, for example `vaultite.tail1234.ts.net`. Vaultite rejects requests for other hostnames, and Compose stops with an error until the value is set.
+
 Clone the Vaultite source into `services/vaultite/source/`. This repository does not include the application source, and the local build needs `package.json`, `package-lock.json`, and the sources in that folder:
 
 ```sh
